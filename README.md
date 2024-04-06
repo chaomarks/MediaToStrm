@@ -2,6 +2,7 @@
 Create strm files in batches
 ![image](https://github.com/chaomarks/MediaToStrm/assets/93130581/e9dbf187-e547-40d0-bb80-666da7561055)
 
+
 软件使用教程：
 在软件里创建strm格式文件时，自身内容会包含所选目录到文件夹名，前缀则需要手动加，比如上面的例子：
 1.源目录为（PC本地目录）：

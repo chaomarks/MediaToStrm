@@ -1,5 +1,6 @@
 # MediaToStrm
 Create strm files in batches
+批量创建本地媒体的strm文件，且strm内容可以自己定义
 
 ![image](https://github.com/chaomarks/MediaToStrm/assets/93130581/e9dbf187-e547-40d0-bb80-666da7561055)
 

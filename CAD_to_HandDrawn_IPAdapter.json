@@ -1,0 +1,1460 @@
+{
+  "last_node_id": 24,
+  "last_link_id": 39,
+  "nodes": [
+    {
+      "id": 1,
+      "type": "LoadImage",
+      "pos": [
+        40,
+        120
+      ],
+      "size": [
+        315,
+        314
+      ],
+      "flags": {},
+      "order": 0,
+      "mode": 0,
+      "outputs": [
+        {
+          "name": "IMAGE",
+          "type": "IMAGE",
+          "links": [
+            1
+          ],
+          "shape": 3,
+          "slot_index": 0
+        },
+        {
+          "name": "MASK",
+          "type": "MASK",
+          "links": null,
+          "shape": 3,
+          "slot_index": 1
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "LoadImage"
+      },
+      "widgets_values": [
+        "11.5_1.jpg",
+        "image"
+      ],
+      "title": "CAD Input - Layout Source"
+    },
+    {
+      "id": 2,
+      "type": "LoadImage",
+      "pos": [
+        40,
+        520
+      ],
+      "size": [
+        315,
+        314
+      ],
+      "flags": {},
+      "order": 1,
+      "mode": 0,
+      "outputs": [
+        {
+          "name": "IMAGE",
+          "type": "IMAGE",
+          "links": [
+            21
+          ],
+          "shape": 3,
+          "slot_index": 0
+        },
+        {
+          "name": "MASK",
+          "type": "MASK",
+          "links": null,
+          "shape": 3,
+          "slot_index": 1
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "LoadImage"
+      },
+      "widgets_values": [
+        "example.png",
+        "image"
+      ],
+      "title": "Hand-drawn Style Reference"
+    },
+    {
+      "id": 3,
+      "type": "ImageScaleToMaxDimension",
+      "pos": [
+        400,
+        120
+      ],
+      "size": [
+        315,
+        106
+      ],
+      "flags": {},
+      "order": 2,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "image",
+          "type": "IMAGE",
+          "link": 1
+        }
+      ],
+      "outputs": [
+        {
+          "name": "IMAGE",
+          "type": "IMAGE",
+          "links": [
+            2,
+            3,
+            4,
+            5
+          ],
+          "shape": 3,
+          "slot_index": 0
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "ImageScaleToMaxDimension"
+      },
+      "widgets_values": [
+        "lanczos",
+        1024
+      ],
+      "title": "CAD Resolution - 1024px Long Side"
+    },
+    {
+      "id": 4,
+      "type": "GetImageSize",
+      "pos": [
+        760,
+        60
+      ],
+      "size": [
+        220,
+        100
+      ],
+      "flags": {},
+      "order": 3,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "image",
+          "type": "IMAGE",
+          "link": 2
+        }
+      ],
+      "outputs": [
+        {
+          "name": "width",
+          "type": "INT",
+          "links": null,
+          "shape": 3,
+          "slot_index": 0
+        },
+        {
+          "name": "height",
+          "type": "INT",
+          "links": null,
+          "shape": 3,
+          "slot_index": 1
+        },
+        {
+          "name": "batch_size",
+          "type": "INT",
+          "links": null,
+          "shape": 3,
+          "slot_index": 2
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "GetImageSize"
+      },
+      "widgets_values": [],
+      "title": "Scaled CAD Size"
+    },
+    {
+      "id": 5,
+      "type": "CannyEdgePreprocessor",
+      "pos": [
+        400,
+        280
+      ],
+      "size": [
+        315,
+        160
+      ],
+      "flags": {},
+      "order": 4,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "image",
+          "type": "IMAGE",
+          "link": 3
+        }
+      ],
+      "outputs": [
+        {
+          "name": "IMAGE",
+          "type": "IMAGE",
+          "links": [
+            18
+          ],
+          "shape": 3,
+          "slot_index": 0
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "CannyEdgePreprocessor"
+      },
+      "widgets_values": [
+        50,
+        150,
+        1024
+      ],
+      "title": "Canny - CAD Geometry"
+    },
+    {
+      "id": 6,
+      "type": "LineArtPreprocessor",
+      "pos": [
+        400,
+        490
+      ],
+      "size": [
+        315,
+        140
+      ],
+      "flags": {},
+      "order": 5,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "image",
+          "type": "IMAGE",
+          "link": 4
+        }
+      ],
+      "outputs": [
+        {
+          "name": "IMAGE",
+          "type": "IMAGE",
+          "links": [
+            20
+          ],
+          "shape": 3,
+          "slot_index": 0
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "LineArtPreprocessor"
+      },
+      "widgets_values": [
+        "disable",
+        1024
+      ],
+      "title": "Lineart - CAD Lines"
+    },
+    {
+      "id": 7,
+      "type": "CheckpointLoaderSimple",
+      "pos": [
+        40,
+        910
+      ],
+      "size": [
+        315,
+        98
+      ],
+      "flags": {},
+      "order": 6,
+      "mode": 0,
+      "outputs": [
+        {
+          "name": "MODEL",
+          "type": "MODEL",
+          "links": [
+            22
+          ],
+          "shape": 3,
+          "slot_index": 0
+        },
+        {
+          "name": "CLIP",
+          "type": "CLIP",
+          "links": [
+            14,
+            16
+          ],
+          "shape": 3,
+          "slot_index": 1
+        },
+        {
+          "name": "VAE",
+          "type": "VAE",
+          "links": null,
+          "shape": 3,
+          "slot_index": 2
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "CheckpointLoaderSimple"
+      },
+      "widgets_values": [
+        "RealVisXL_V5.0_fp16.safetensors"
+      ],
+      "title": "Checkpoint - RealVisXL V5.0 fp16"
+    },
+    {
+      "id": 8,
+      "type": "VAELoader",
+      "pos": [
+        400,
+        910
+      ],
+      "size": [
+        315,
+        60
+      ],
+      "flags": {},
+      "order": 7,
+      "mode": 0,
+      "outputs": [
+        {
+          "name": "VAE",
+          "type": "VAE",
+          "links": [
+            15,
+            28
+          ],
+          "shape": 3,
+          "slot_index": 0
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "VAELoader"
+      },
+      "widgets_values": [
+        "sdxl_vae_fp16fix.safetensors"
+      ],
+      "title": "VAE - SDXL fp16 Fix"
+    },
+    {
+      "id": 9,
+      "type": "CLIPTextEncode",
+      "pos": [
+        780,
+        870
+      ],
+      "size": [
+        420,
+        180
+      ],
+      "flags": {},
+      "order": 8,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "clip",
+          "type": "CLIP",
+          "link": 14
+        }
+      ],
+      "outputs": [
+        {
+          "name": "CONDITIONING",
+          "type": "CONDITIONING",
+          "links": [
+            17
+          ],
+          "shape": 3,
+          "slot_index": 0
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "CLIPTextEncode"
+      },
+      "widgets_values": [
+        "architectural CAD plan converted to a monochrome architect pencil sketch, white scanned drafting paper, black and gray graphite linework, slight hand-drawn line variation, subtle paper texture, preserve every road, building footprint, scale, text position, label position and annotation position, plan view only, no added buildings, no redesign"
+      ],
+      "title": "Positive - Preserve CAD, Apply Pencil Style"
+    },
+    {
+      "id": 10,
+      "type": "CLIPTextEncode",
+      "pos": [
+        780,
+        1160
+      ],
+      "size": [
+        420,
+        180
+      ],
+      "flags": {},
+      "order": 9,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "clip",
+          "type": "CLIP",
+          "link": 16
+        }
+      ],
+      "outputs": [
+        {
+          "name": "CONDITIONING",
+          "type": "CONDITIONING",
+          "links": [
+            19
+          ],
+          "shape": 3,
+          "slot_index": 0
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "CLIPTextEncode"
+      },
+      "widgets_values": [
+        "color, watercolor, marker, colored pencil, photorealism, 3d render, perspective view, elevation view, isometric, cinematic lighting, shadows, trees, vehicles, people, new buildings, changed building locations, changed road locations, moved text, changed labels, effect rendering"
+      ],
+      "title": "Negative - No Color, Render, or Redesign"
+    },
+    {
+      "id": 11,
+      "type": "VAEEncodeTiled",
+      "pos": [
+        1320,
+        880
+      ],
+      "size": [
+        300,
+        150
+      ],
+      "flags": {},
+      "order": 10,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "pixels",
+          "type": "IMAGE",
+          "link": 5
+        },
+        {
+          "name": "vae",
+          "type": "VAE",
+          "link": 15
+        }
+      ],
+      "outputs": [
+        {
+          "name": "LATENT",
+          "type": "LATENT",
+          "links": [
+            27
+          ],
+          "shape": 3,
+          "slot_index": 0
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "VAEEncodeTiled"
+      },
+      "widgets_values": [
+        512,
+        64,
+        64,
+        8
+      ],
+      "title": "CAD Img2Img Latent - Tiled VAE"
+    },
+    {
+      "id": 12,
+      "type": "ControlNetLoader",
+      "pos": [
+        1320,
+        120
+      ],
+      "size": [
+        315,
+        90
+      ],
+      "flags": {},
+      "order": 11,
+      "mode": 0,
+      "outputs": [
+        {
+          "name": "CONTROL_NET",
+          "type": "CONTROL_NET",
+          "links": [
+            23,
+            24
+          ],
+          "shape": 3,
+          "slot_index": 0
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "ControlNetLoader"
+      },
+      "widgets_values": [
+        "xinsir_controlnet_union_sdxl.safetensors"
+      ],
+      "title": "ControlNet - Xinsir Union SDXL"
+    },
+    {
+      "id": 13,
+      "type": "SetUnionControlNetType",
+      "pos": [
+        1680,
+        80
+      ],
+      "size": [
+        315,
+        90
+      ],
+      "flags": {},
+      "order": 12,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "control_net",
+          "type": "CONTROL_NET",
+          "link": 23
+        },
+        {
+          "name": "type",
+          "type": "COMBO",
+          "link": null,
+          "widget": {
+            "name": "type"
+          }
+        }
+      ],
+      "outputs": [
+        {
+          "name": "CONTROL_NET",
+          "type": "CONTROL_NET",
+          "links": [
+            25
+          ],
+          "shape": 3,
+          "slot_index": 0
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "SetUnionControlNetType"
+      },
+      "widgets_values": [
+        "canny/lineart/anime_lineart/mlsd"
+      ],
+      "title": "Union Type - Canny"
+    },
+    {
+      "id": 14,
+      "type": "SetUnionControlNetType",
+      "pos": [
+        1680,
+        260
+      ],
+      "size": [
+        315,
+        90
+      ],
+      "flags": {},
+      "order": 13,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "control_net",
+          "type": "CONTROL_NET",
+          "link": 24
+        },
+        {
+          "name": "type",
+          "type": "COMBO",
+          "link": null,
+          "widget": {
+            "name": "type"
+          }
+        }
+      ],
+      "outputs": [
+        {
+          "name": "CONTROL_NET",
+          "type": "CONTROL_NET",
+          "links": [
+            26
+          ],
+          "shape": 3,
+          "slot_index": 0
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "SetUnionControlNetType"
+      },
+      "widgets_values": [
+        "canny/lineart/anime_lineart/mlsd"
+      ],
+      "title": "Union Type - Lineart"
+    },
+    {
+      "id": 15,
+      "type": "ControlNetApplyAdvanced",
+      "pos": [
+        2030,
+        70
+      ],
+      "size": [
+        350,
+        250
+      ],
+      "flags": {},
+      "order": 14,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "positive",
+          "type": "CONDITIONING",
+          "link": 17
+        },
+        {
+          "name": "negative",
+          "type": "CONDITIONING",
+          "link": 19
+        },
+        {
+          "name": "control_net",
+          "type": "CONTROL_NET",
+          "link": 25
+        },
+        {
+          "name": "image",
+          "type": "IMAGE",
+          "link": 18
+        },
+        {
+          "name": "strength",
+          "type": "FLOAT",
+          "link": null,
+          "widget": {
+            "name": "strength"
+          }
+        },
+        {
+          "name": "start_percent",
+          "type": "FLOAT",
+          "link": null,
+          "widget": {
+            "name": "start_percent"
+          }
+        },
+        {
+          "name": "end_percent",
+          "type": "FLOAT",
+          "link": null,
+          "widget": {
+            "name": "end_percent"
+          }
+        }
+      ],
+      "outputs": [
+        {
+          "name": "positive",
+          "type": "CONDITIONING",
+          "links": [
+            29
+          ],
+          "shape": 3,
+          "slot_index": 0
+        },
+        {
+          "name": "negative",
+          "type": "CONDITIONING",
+          "links": [
+            30
+          ],
+          "shape": 3,
+          "slot_index": 1
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "ControlNetApplyAdvanced"
+      },
+      "widgets_values": [
+        0.8,
+        0,
+        1
+      ],
+      "title": "ControlNet Canny - Strength 0.80"
+    },
+    {
+      "id": 16,
+      "type": "ControlNetApplyAdvanced",
+      "pos": [
+        2420,
+        70
+      ],
+      "size": [
+        350,
+        250
+      ],
+      "flags": {},
+      "order": 15,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "positive",
+          "type": "CONDITIONING",
+          "link": 29
+        },
+        {
+          "name": "negative",
+          "type": "CONDITIONING",
+          "link": 30
+        },
+        {
+          "name": "control_net",
+          "type": "CONTROL_NET",
+          "link": 26
+        },
+        {
+          "name": "image",
+          "type": "IMAGE",
+          "link": 20
+        },
+        {
+          "name": "strength",
+          "type": "FLOAT",
+          "link": null,
+          "widget": {
+            "name": "strength"
+          }
+        },
+        {
+          "name": "start_percent",
+          "type": "FLOAT",
+          "link": null,
+          "widget": {
+            "name": "start_percent"
+          }
+        },
+        {
+          "name": "end_percent",
+          "type": "FLOAT",
+          "link": null,
+          "widget": {
+            "name": "end_percent"
+          }
+        }
+      ],
+      "outputs": [
+        {
+          "name": "positive",
+          "type": "CONDITIONING",
+          "links": [
+            31
+          ],
+          "shape": 3,
+          "slot_index": 0
+        },
+        {
+          "name": "negative",
+          "type": "CONDITIONING",
+          "links": [
+            32
+          ],
+          "shape": 3,
+          "slot_index": 1
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "ControlNetApplyAdvanced"
+      },
+      "widgets_values": [
+        0.6,
+        0,
+        1
+      ],
+      "title": "ControlNet Lineart - Strength 0.60"
+    },
+    {
+      "id": 17,
+      "type": "IPAdapterModelLoader",
+      "pos": [
+        1320,
+        520
+      ],
+      "size": [
+        315,
+        60
+      ],
+      "flags": {},
+      "order": 16,
+      "mode": 0,
+      "outputs": [
+        {
+          "name": "IPADAPTER",
+          "type": "IPADAPTER",
+          "links": [
+            34
+          ],
+          "shape": 3,
+          "slot_index": 0
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "IPAdapterModelLoader"
+      },
+      "widgets_values": [
+        "ip-adapter-plus_sdxl_vit-h.safetensors"
+      ],
+      "title": "IPAdapter Plus SDXL"
+    },
+    {
+      "id": 18,
+      "type": "CLIPVisionLoader",
+      "pos": [
+        1320,
+        630
+      ],
+      "size": [
+        315,
+        60
+      ],
+      "flags": {},
+      "order": 17,
+      "mode": 0,
+      "outputs": [
+        {
+          "name": "CLIP_VISION",
+          "type": "CLIP_VISION",
+          "links": [
+            35
+          ],
+          "shape": 3,
+          "slot_index": 0
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "CLIPVisionLoader"
+      },
+      "widgets_values": [
+        "CLIP-ViT-H-14-laion2B-s32B-b79K.safetensors"
+      ],
+      "title": "CLIP Vision ViT-H"
+    },
+    {
+      "id": 19,
+      "type": "PrepImageForClipVision",
+      "pos": [
+        780,
+        560
+      ],
+      "size": [
+        315,
+        106
+      ],
+      "flags": {},
+      "order": 18,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "image",
+          "type": "IMAGE",
+          "link": 21
+        }
+      ],
+      "outputs": [
+        {
+          "name": "IMAGE",
+          "type": "IMAGE",
+          "links": [
+            36
+          ],
+          "shape": 3,
+          "slot_index": 0
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "PrepImageForClipVision"
+      },
+      "widgets_values": [
+        "LANCZOS",
+        "pad",
+        0
+      ],
+      "title": "Style Reference - CLIP Vision Prep"
+    },
+    {
+      "id": 20,
+      "type": "IPAdapterAdvanced",
+      "pos": [
+        1680,
+        480
+      ],
+      "size": [
+        400,
+        300
+      ],
+      "flags": {},
+      "order": 19,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "model",
+          "type": "MODEL",
+          "link": 22
+        },
+        {
+          "name": "ipadapter",
+          "type": "IPADAPTER",
+          "link": 34
+        },
+        {
+          "name": "image",
+          "type": "IMAGE",
+          "link": 36
+        },
+        {
+          "name": "image_negative",
+          "type": "IMAGE",
+          "link": null
+        },
+        {
+          "name": "attn_mask",
+          "type": "MASK",
+          "link": null
+        },
+        {
+          "name": "clip_vision",
+          "type": "CLIP_VISION",
+          "link": 35
+        }
+      ],
+      "outputs": [
+        {
+          "name": "MODEL",
+          "type": "MODEL",
+          "links": [
+            33
+          ],
+          "shape": 3,
+          "slot_index": 0
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "IPAdapterAdvanced"
+      },
+      "widgets_values": [
+        0.6,
+        "style transfer",
+        "average",
+        0,
+        1,
+        "V only"
+      ],
+      "title": "IPAdapter Style Only - Weight 0.60"
+    },
+    {
+      "id": 21,
+      "type": "KSampler",
+      "pos": [
+        2820,
+        390
+      ],
+      "size": [
+        330,
+        490
+      ],
+      "flags": {},
+      "order": 20,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "model",
+          "type": "MODEL",
+          "link": 33
+        },
+        {
+          "name": "positive",
+          "type": "CONDITIONING",
+          "link": 31
+        },
+        {
+          "name": "negative",
+          "type": "CONDITIONING",
+          "link": 32
+        },
+        {
+          "name": "latent_image",
+          "type": "LATENT",
+          "link": 27
+        }
+      ],
+      "outputs": [
+        {
+          "name": "LATENT",
+          "type": "LATENT",
+          "links": [
+            37
+          ],
+          "shape": 3,
+          "slot_index": 0
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "KSampler"
+      },
+      "widgets_values": [
+        20260808,
+        "fixed",
+        28,
+        5,
+        "dpmpp_2m",
+        "karras",
+        0.3
+      ],
+      "title": "KSampler - 28 Steps, CFG 5, Denoise 0.30"
+    },
+    {
+      "id": 22,
+      "type": "VAEDecodeTiled",
+      "pos": [
+        3190,
+        390
+      ],
+      "size": [
+        300,
+        150
+      ],
+      "flags": {},
+      "order": 21,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "samples",
+          "type": "LATENT",
+          "link": 37
+        },
+        {
+          "name": "vae",
+          "type": "VAE",
+          "link": 28
+        }
+      ],
+      "outputs": [
+        {
+          "name": "IMAGE",
+          "type": "IMAGE",
+          "links": [
+            38
+          ],
+          "shape": 3,
+          "slot_index": 0
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "VAEDecodeTiled"
+      },
+      "widgets_values": [
+        512,
+        64,
+        64,
+        8
+      ],
+      "title": "Decode - Tiled VAE"
+    },
+    {
+      "id": 23,
+      "type": "EngineeringSurveyHandSketchPreserve",
+      "pos": [
+        3540,
+        390
+      ],
+      "size": [
+        355,
+        190
+      ],
+      "flags": {},
+      "order": 22,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "image",
+          "type": "IMAGE",
+          "link": 38
+        }
+      ],
+      "outputs": [
+        {
+          "name": "IMAGE",
+          "type": "IMAGE",
+          "links": [
+            39
+          ],
+          "shape": 3,
+          "slot_index": 0
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "EngineeringSurveyHandSketchPreserve"
+      },
+      "widgets_values": [
+        1.02,
+        0.18,
+        0.02,
+        1,
+        20260808
+      ],
+      "title": "White Paper + Graphite Scan Finish"
+    },
+    {
+      "id": 24,
+      "type": "SaveImage",
+      "pos": [
+        3950,
+        390
+      ],
+      "size": [
+        315,
+        270
+      ],
+      "flags": {},
+      "order": 23,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "images",
+          "type": "IMAGE",
+          "link": 39
+        }
+      ],
+      "outputs": [],
+      "properties": {
+        "Node name for S&R": "SaveImage"
+      },
+      "widgets_values": [
+        "CAD_to_HandDrawn_IPAdapter"
+      ],
+      "title": "Save 1024px Hand-drawn CAD"
+    }
+  ],
+  "links": [
+    [
+      1,
+      1,
+      0,
+      3,
+      0,
+      "IMAGE"
+    ],
+    [
+      2,
+      3,
+      0,
+      4,
+      0,
+      "IMAGE"
+    ],
+    [
+      3,
+      3,
+      0,
+      5,
+      0,
+      "IMAGE"
+    ],
+    [
+      4,
+      3,
+      0,
+      6,
+      0,
+      "IMAGE"
+    ],
+    [
+      5,
+      3,
+      0,
+      11,
+      0,
+      "IMAGE"
+    ],
+    [
+      14,
+      7,
+      1,
+      9,
+      0,
+      "CLIP"
+    ],
+    [
+      15,
+      8,
+      0,
+      11,
+      1,
+      "VAE"
+    ],
+    [
+      16,
+      7,
+      1,
+      10,
+      0,
+      "CLIP"
+    ],
+    [
+      17,
+      9,
+      0,
+      15,
+      0,
+      "CONDITIONING"
+    ],
+    [
+      18,
+      5,
+      0,
+      15,
+      3,
+      "IMAGE"
+    ],
+    [
+      19,
+      10,
+      0,
+      15,
+      1,
+      "CONDITIONING"
+    ],
+    [
+      20,
+      6,
+      0,
+      16,
+      3,
+      "IMAGE"
+    ],
+    [
+      21,
+      2,
+      0,
+      19,
+      0,
+      "IMAGE"
+    ],
+    [
+      22,
+      7,
+      0,
+      20,
+      0,
+      "MODEL"
+    ],
+    [
+      23,
+      12,
+      0,
+      13,
+      0,
+      "CONTROL_NET"
+    ],
+    [
+      24,
+      12,
+      0,
+      14,
+      0,
+      "CONTROL_NET"
+    ],
+    [
+      25,
+      13,
+      0,
+      15,
+      2,
+      "CONTROL_NET"
+    ],
+    [
+      26,
+      14,
+      0,
+      16,
+      2,
+      "CONTROL_NET"
+    ],
+    [
+      27,
+      11,
+      0,
+      21,
+      3,
+      "LATENT"
+    ],
+    [
+      28,
+      8,
+      0,
+      22,
+      1,
+      "VAE"
+    ],
+    [
+      29,
+      15,
+      0,
+      16,
+      0,
+      "CONDITIONING"
+    ],
+    [
+      30,
+      15,
+      1,
+      16,
+      1,
+      "CONDITIONING"
+    ],
+    [
+      31,
+      16,
+      0,
+      21,
+      1,
+      "CONDITIONING"
+    ],
+    [
+      32,
+      16,
+      1,
+      21,
+      2,
+      "CONDITIONING"
+    ],
+    [
+      33,
+      20,
+      0,
+      21,
+      0,
+      "MODEL"
+    ],
+    [
+      34,
+      17,
+      0,
+      20,
+      1,
+      "IPADAPTER"
+    ],
+    [
+      35,
+      18,
+      0,
+      20,
+      5,
+      "CLIP_VISION"
+    ],
+    [
+      36,
+      19,
+      0,
+      20,
+      2,
+      "IMAGE"
+    ],
+    [
+      37,
+      21,
+      0,
+      22,
+      0,
+      "LATENT"
+    ],
+    [
+      38,
+      22,
+      0,
+      23,
+      0,
+      "IMAGE"
+    ],
+    [
+      39,
+      23,
+      0,
+      24,
+      0,
+      "IMAGE"
+    ]
+  ],
+  "groups": [
+    {
+      "title": "Inputs and 1024px CAD preparation",
+      "bounding": [
+        10,
+        50,
+        1010,
+        790
+      ],
+      "color": "#3a7ca5",
+      "font_size": 24
+    },
+    {
+      "title": "SDXL model, VAE, prompts, and CAD img2img latent",
+      "bounding": [
+        10,
+        830,
+        1630,
+        640
+      ],
+      "color": "#6c6f3a",
+      "font_size": 24
+    },
+    {
+      "title": "Dual CAD structure ControlNet",
+      "bounding": [
+        1280,
+        40,
+        1540,
+        350
+      ],
+      "color": "#9a6a42",
+      "font_size": 24
+    },
+    {
+      "title": "Hand-drawn style reference through IPAdapter",
+      "bounding": [
+        740,
+        450,
+        1380,
+        360
+      ],
+      "color": "#6b5b95",
+      "font_size": 24
+    },
+    {
+      "title": "Low VRAM sampling and monochrome scanned-paper output",
+      "bounding": [
+        2790,
+        340,
+        1510,
+        570
+      ],
+      "color": "#3c7d63",
+      "font_size": 24
+    }
+  ],
+  "config": {},
+  "extra": {
+    "description": "Low-VRAM SDXL CAD to monochrome architectural hand-drawn workflow. CAD is resized with its aspect ratio intact to a 1024px long side, encoded for low-denoise img2img, constrained with Canny and Lineart branches of Xinsir Union ControlNet, and receives style only from IPAdapter. No upscaler is connected in the main workflow."
+  },
+  "version": 0.4
+}
